@@ -28,7 +28,7 @@ namespace TimeStopDependency
 
         internal static float RainWorldGame_TimeSpeedFac_get(orig_TimeSpeedFac orig, RainWorldGame self)
         {
-            if (self.GetCustomData().isTimeStopActive)
+            if (self.GetCustomData().isTimeStopActive && !self.GetCustomData().allowEffectsGraohicUpdate)
             {            
                 return 0f;
             }
@@ -110,6 +110,7 @@ namespace TimeStopDependency
         public class Data
         {
             internal bool isTimeStopActive;
+            internal bool allowEffectsGraohicUpdate;
         }
     }
 
@@ -142,6 +143,34 @@ namespace TimeStopDependency
         public static bool IsTimeStopActive(this RainWorldGame rwg)
         {
             return rwg.GetCustomData().isTimeStopActive;
+        }
+
+        /// <summary>
+        /// Allows some decorative graphics and sound controllers to update in Time Stop state.
+        /// Sets TimeSpeedFac to original value.
+        /// </summary>
+        public static void AllowEffectsUpdateDuringTimeStop(this RainWorldGame rwg)
+        {
+            if (rwg.GetCustomData().allowEffectsGraohicUpdate) return;
+            rwg.GetCustomData().allowEffectsGraohicUpdate = true;
+        }
+
+        /// <summary>
+        /// Prevents some decorative graphics and sound controllers from updating in Time Stop state.
+        /// Sets TimeSpeedFac to 0f.
+        /// </summary>
+        public static void DisallowEffectsUpdateDuringTimeStop(this RainWorldGame rwg)
+        {
+            if (!rwg.GetCustomData().allowEffectsGraohicUpdate) return;
+            rwg.GetCustomData().allowEffectsGraohicUpdate = false;
+        }
+
+        /// <summary>
+        /// Returns whenever or not some decorative graphics and sound controllers can update.
+        /// </summary>
+        public static bool IsEffectsUpdateAllowed(this RainWorldGame rwg)
+        {
+            return rwg.GetCustomData().allowEffectsGraohicUpdate;
         }
 
         /// <summary>
