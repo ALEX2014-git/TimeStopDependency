@@ -111,6 +111,7 @@ namespace TimeStopDependency
         {
             internal bool isTimeStopActive;
             internal bool allowEffectsGraohicUpdate;
+            internal bool canSlugNPCUpdate;
         }
     }
 
@@ -143,6 +144,32 @@ namespace TimeStopDependency
         public static bool IsTimeStopActive(this RainWorldGame rwg)
         {
             return rwg.GetCustomData().isTimeStopActive;
+        }
+
+        /// <summary>
+        /// Gives SlugNPC and Pups ability to move during Time Stop if Player type is present in TimeStopImmuneTypes.
+        /// </summary>
+        public static void AllowSlugNPCUpdate(this RainWorldGame rwg)
+        {
+            if (rwg.GetCustomData().canSlugNPCUpdate) return;
+            rwg.GetCustomData().canSlugNPCUpdate = true;
+        }
+
+        /// <summary>
+        /// Revokes SlugNPCs and Pups ability to move during Time Stop if Player type is present in TimeStopImmuneTypes.
+        /// </summary>
+        public static void DisllowSlugNPCUpdate(this RainWorldGame rwg)
+        {
+            if (!rwg.GetCustomData().canSlugNPCUpdate) return;
+            rwg.GetCustomData().canSlugNPCUpdate = false;
+        }
+
+        /// <summary>
+        /// Returns whenever or not SlugNPCs and Pups have ability to move during Time Stop if Player type is present in TimeStopImmuneTypes.
+        /// </summary>
+        public static bool CanSlugNPCUpdate(this RainWorldGame rwg)
+        {
+            return rwg.GetCustomData().canSlugNPCUpdate;
         }
 
         /// <summary>

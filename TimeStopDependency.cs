@@ -24,7 +24,7 @@ public partial class TimeStopDependency : BaseUnityPlugin
 {
     public const string PLUGIN_GUID = "ALEX2014.TimeStopDependency";
     public const string PLUGIN_NAME = "Time Stop Dependency";
-    public const string PLUGIN_VERSION = "1.0.0";
+    public const string PLUGIN_VERSION = "1.1.0";
 
     internal PluginOptions options;
 
@@ -86,7 +86,6 @@ public partial class TimeStopDependency : BaseUnityPlugin
             On.RainWorldGame.ShutDownProcess += RainWorldGame_ShutDownProcess;
             On.GameSession.ctor += GameSession_ctor;
             On.RainWorld.OnModsDisabled += RainWorld_OnModsDisabled;
-            On.Player.ctor += Player_ctor;
             On.PhysicalObject.Update += PhysicalObject_Update;
             On.Weapon.Grabbed += Weapon_Grabbed;
             On.RainWorldGame.AllowRainCounterToTick += RainWorldGame_AllowRainCounterToTick;

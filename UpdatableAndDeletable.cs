@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BepInEx;
+using MoreSlugcats;
 
 namespace TimeStopDependency
 {
@@ -72,6 +73,17 @@ namespace TimeStopDependency
         public static bool IsTimeStopImmune(this UpdatableAndDeletable uAD)
         {
             return uAD.GetCustomData().isImmuneToTimeStop;
+        }
+
+        /// <summary>
+        /// Returns whenever or not entity is allowed to update during Time Stop.
+        /// </summary>
+        public static bool IsEligableForUpdate(this UpdatableAndDeletable uAD)
+        {
+            if (uAD.GetCustomData().isImmuneToTimeStop || uAD is IAmImmuneToTimeStop) return true;
+            if (uAD is Player && TimeStopDependency.TimeStopImmuneTypes.Contains(typeof(Player)) && (uAD as Player).isNPC && !(uAD as Player).abstractCreature.world.game.CanSlugNPCUpdate()) return false;
+            if (TimeStopDependency.TimeStopImmuneTypes.Contains(uAD.GetType())) return true;
+            return false;
         }
 
         /// <summary>

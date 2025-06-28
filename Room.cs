@@ -109,10 +109,7 @@ namespace TimeStopDependency
             bool CheckForTimeStopInRoomUpdateForUpdatingUAD(UpdatableAndDeletable varUAD, Room this_arg)
             {
                 if (!this_arg.game.GetCustomData().isTimeStopActive ||
-                    varUAD.GetCustomData().isImmuneToTimeStop ||
-                    varUAD is IAmImmuneToTimeStop ||
-                    varUAD.IsThisTypeImmune()
-                    ) return true;
+                    varUAD.IsEligableForUpdate()) return true;
                 return false;
             }
             h.EmitDelegate<Func<UpdatableAndDeletable, Room, bool>>(CheckForTimeStopInRoomUpdateForUpdatingUAD);
